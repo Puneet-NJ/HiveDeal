@@ -28,8 +28,8 @@ router.post("/register", async (req, res) => {
 			expiresIn: "1h",
 		});
 
-		req.session.userID = newUser._id;
-		console.log(req.session.userID);
+		// req.session.userID = newUser._id;
+		// console.log(req.session.userID);
 
 		return res.json({
 			auth: true,

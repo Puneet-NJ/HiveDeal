@@ -28,12 +28,12 @@ const Cart = () => {
 				},
 			});
 			// console.log(data);
-
+			// console.log(data)
 			const json = await data.json();
-			console.log(json?.cartItems?.product);
+			console.log(json?.cartItems?.products);
 			console.log(cartItems);
 
-			setItems(json?.cartItems?.product);
+			setItems(json?.cartItems?.products);
 		};
 
 		func();

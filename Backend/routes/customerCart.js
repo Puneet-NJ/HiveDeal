@@ -24,8 +24,12 @@ router.get("/cart", Auth, async (req, res) => {
 			const cartItems = await customerCart
 				.findOne({ customer: custCartValue._id })
 				.populate("customer")
-				.populate("product");
+				.populate({
+					path:"product.product",
+					model: "Product"
+				});
 
+				console.log(cartItems)
 			res.json({
 				cartItems,
 			});
@@ -36,49 +40,44 @@ router.get("/cart", Auth, async (req, res) => {
 });
 
 router.post("/additem", Auth, async (req, res) => {
-	try {
-		const { _id } = req.body;
+    try {
+        const { _id } = req.body;
 
-		// Check if the customer ID is available in the session
-		// if (!req.session.userID) {
-		// 	return res.status(403).json("Forbidden, Please Login first");
-		// }
+        jwt.verify(req.token, process.env.user_token, async (err, data) => {
+            if (err) {
+                return res.json("error, forbidden");
+            } 
+            
+            const custCartValue = await customer.findOne({
+                customerEmail: data.customerEmail,
+            });
 
-		// const custID = req.session.userID;
-		const productId = _id;
+            let cart = await customerCart.findOne({ customer: custCartValue._id });
+            if (!cart) {
+                await customerCart.create({
+                    customer: custCartValue._id,
+                    product: [{ product: _id }]
+                });
+            } else {
+                const productInCart = cart.product.find(p => p.product.toString() === _id);
+				
+                if (productInCart) {
+                    productInCart.totalItems += 1;
+                } else {
+                    cart.product.push({ product: _id });
+                }
+                await cart.save(); 
+            }
 
-		// console.log(custID);
-		// Verify the JWT token
-		jwt.verify(req.token, process.env.user_token, async (err, data) => {
-			// console.log("data", data.customerEmail);
-			const custCartValue = await customer.findOne({
-				customerEmail: data.customerEmail,
-			});
-			console.log(custCartValue);
-			if (err) {
-				return res.status(403).json("error, forbidden");
-			} else {
-				let cart = await customerCart.findOne({ customer: custCartValue._id });
-				console.log(cart)
-				if (!cart) {
-					await customerCart.create({
-						customer: custCartValue._id,
-						product: productId,
-						
-					});
-					await product.findOneAndUpdate({_id: productId} , {totalItems: 1})
-					return res.json("New cart created for new user");
-				} else {
-					await customerCart.findOneAndUpdate({ customer: custCartValue._id },{ $push: { product: productId } });
-					await product.findOneAndUpdate({_id: productId} , {totalItems: 1})
-					return res.send("New item added");
-				}
-			}
-		});
-	} catch (err) {
-		return res.status(500).json("Internal server error");
-	}
+            await product.findByIdAndUpdate(_id, { $inc: { totalItems: 1 } });
+
+            return res.send("Item added to cart");
+        });
+    } catch (err) {
+        return res.json("Internal server error");
+    }
 });
+
 
 // router.post('/item/quantity/:id' , Auth , async(req,res)=>{
 //     const {productId , quantity} = req.body
