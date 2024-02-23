@@ -38,13 +38,15 @@ const Product = () => {
 				JSON.stringify({ ...item, totalItems: 1 }) ===
 				JSON.stringify(itemInCart)
 		);
-		if (present) return;
+		if (present) {
+			navigate("/cart");
+			return;
+		}
 		if (!present) dispatch(addCartItems({ ...item, totalItems: 1 }));
 
 		navigate("/cart");
 
 		//Send to Backend
-		// console.log(`http://localhost:3000/customer/additem/${item._id}`);
 
 		const msg = await fetch(`http://localhost:3000/customer/additem`, {
 			method: "POST",
@@ -57,8 +59,6 @@ const Product = () => {
 			},
 		});
 		console.log(msg);
-		// const json = await msg.json();
-		// console.log(json);
 	};
 
 	return (

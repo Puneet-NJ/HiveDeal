@@ -44,13 +44,14 @@ const Cart = () => {
 		newCount[index] = inc ? count[index] + 1 : count[index] - 1;
 		setCount(newCount);
 
-		let newCartItems = cartItems.map((item, i) => {
+		let newCartItems = items.map((item, i) => {
 			if (i === index) {
 				return { ...item, totalItems: newCount[index] };
 			}
 			return { ...item };
 		});
-		dispatch(updateCartItems(newCartItems));
+		setItems(newCartItems);
+		dispatch(updateCartItems(items));
 
 		// Send to backend
 		const newItem = {
@@ -73,7 +74,11 @@ const Cart = () => {
 		const newCart = [...cartItems];
 		newCart.splice(index, 1);
 
-		dispatch(updateCartItems(newCart));
+		setItems(newCart);
+		console.log(items);
+		dispatch(updateCartItems(items));
+
+		//Send to Backend
 	};
 
 	const handlePlaceOrder = () => {
