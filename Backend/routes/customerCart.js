@@ -25,7 +25,7 @@ router.get("/cart", Auth, async (req, res) => {
 				.findOne({ customer: custCartValue._id })
 				.populate("customer")
 				.populate("product");
-
+			console.log(cartItems);
 			res.json({
 				cartItems,
 			});
@@ -59,18 +59,20 @@ router.post("/additem", Auth, async (req, res) => {
 				return res.status(403).json("error, forbidden");
 			} else {
 				let cart = await customerCart.findOne({ customer: custCartValue._id });
-				console.log(cart)
+				console.log(cart);
 				if (!cart) {
 					await customerCart.create({
 						customer: custCartValue._id,
 						product: productId,
-						
 					});
-					await product.findOneAndUpdate({_id: productId} , {totalItems: 1})
+					await product.findOneAndUpdate({ _id: productId }, { totalItems: 1 });
 					return res.json("New cart created for new user");
 				} else {
-					await customerCart.findOneAndUpdate({ customer: custCartValue._id },{ $push: { product: productId } });
-					await product.findOneAndUpdate({_id: productId} , {totalItems: 1})
+					await customerCart.findOneAndUpdate(
+						{ customer: custCartValue._id },
+						{ $push: { product: productId } }
+					);
+					await product.findOneAndUpdate({ _id: productId }, { totalItems: 1 });
 					return res.send("New item added");
 				}
 			}
