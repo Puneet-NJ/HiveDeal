@@ -10,7 +10,8 @@ const productSchema = mongoose.Schema({
             data: Buffer,
             contentType: String,
         }
-    ]
+    ],
+    totalItems: Number
 
 })
 

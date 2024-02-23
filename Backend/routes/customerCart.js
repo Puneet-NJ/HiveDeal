@@ -3,6 +3,7 @@ import customerCart from "../models/cart.js";
 import customer from "../models/customer.js";
 import express from "express";
 import jwt from "jsonwebtoken";
+import product from "../models/product.js";
 
 // import product from '../models/product'
 
@@ -49,7 +50,7 @@ router.post("/additem", Auth, async (req, res) => {
 		// console.log(custID);
 		// Verify the JWT token
 		jwt.verify(req.token, process.env.user_token, async (err, data) => {
-			console.log("data", data?.customerEmail);
+			// console.log("data", data.customerEmail);
 			const custCartValue = await customer.findOne({
 				customerEmail: data.customerEmail,
 			});
@@ -58,17 +59,18 @@ router.post("/additem", Auth, async (req, res) => {
 				return res.status(403).json("error, forbidden");
 			} else {
 				let cart = await customerCart.findOne({ customer: custCartValue._id });
+				console.log(cart)
 				if (!cart) {
 					await customerCart.create({
 						customer: custCartValue._id,
 						product: productId,
+						
 					});
+					await product.findOneAndUpdate({_id: productId} , {totalItems: 1})
 					return res.json("New cart created for new user");
 				} else {
-					await customerCart.findOneAndUpdate(
-						{ customer: customerCart._id },
-						{ $push: { product: productId } }
-					);
+					await customerCart.findOneAndUpdate({ customer: custCartValue._id },{ $push: { product: productId } });
+					await product.findOneAndUpdate({_id: productId} , {totalItems: 1})
 					return res.send("New item added");
 				}
 			}

@@ -13,10 +13,10 @@ const customerCartSchema = mongoose.Schema({
             required: true
         }
     ],
-    quantity: {
-        type: Number,
-        // Additional options if needed
-    }
+    // totalItems: {
+    //     type: Number,
+    //     // Additional options if needed
+    // }
 });
 
 const customerCart = mongoose.model('customerCart', customerCartSchema);
