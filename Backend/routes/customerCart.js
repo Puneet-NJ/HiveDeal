@@ -78,15 +78,81 @@ router.post("/additem", Auth, async (req, res) => {
     }
 });
 
+router.post('/removeitem', Auth, async (req, res) => {
+  
+    try {
+        const {_id} = req.body
+        jwt.verify(req.token , process.env.user_token ,async  (err,data)=>{
+            if(err){
+                res.json('forbidden')
+            }
+            else{
+                const cust = await customer.findOne({
+                    customerEmail: data.customerEmail
+                })
+                const customerCartValues = await customerCart.findOne(
+                    {customer: cust._id}
+                )
+                    console.log(customerCartValues);
+                    const procuctToRemove = customerCartValues.product.filter((item)=> {
+                        return item.product.toString() !== _id
+                    })
+                    // console.log('product removed ' , procuctToRemove)
+                   customerCartValues.product = procuctToRemove
+                   await customerCartValues.save()
+                //    console.log(customerCartValues)
+               // console.log(customerCartValues);
+                   res.json('saved')
 
-// router.post('/item/quantity/:id' , Auth , async(req,res)=>{
-//     const {productId , quantity} = req.body
-//     try{
+                    
+            }
 
-//     }
-//     catch(err){
-//         res.json('internal server error')
-//     }
-// })
+        })
+    } catch (err) {
+        res.json(err)
+    }
+})
+
+
+router.post('/decrement', Auth , (req,res)=>{
+    try {
+        const { _id } = req.body;
+
+        jwt.verify(req.token, process.env.user_token, async (err, data) => {
+            if (err) {
+                return res.json("error, forbidden");
+            } 
+            
+            const custCartValue = await customer.findOne({
+                customerEmail: data.customerEmail,
+            });
+
+            let cart = await customerCart.findOne({ customer: custCartValue._id });
+            if (!cart) {
+                await customerCart.create({
+                    customer: custCartValue._id,
+                    product: [{ product: _id }]
+                });
+            } else {
+                const productInCart = cart.product.find(p => p.product.toString() === _id);
+				
+                if (productInCart) {
+                    productInCart.totalItems -= 1;
+                } else {
+                    cart.product.push({ product: _id });
+                }
+                await cart.save(); 
+            }
+
+            await product.findByIdAndUpdate(_id, { $dec: { totalItems: 1 } });
+
+            return res.send("Item Decreased");
+        });
+    } catch (err) {
+        return res.json("Internal server error");
+    }
+})
+
+
 
 export default router;
