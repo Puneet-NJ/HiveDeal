@@ -102,14 +102,14 @@ router.post('/removeitem', Auth, async (req, res) => {
                    await customerCartValues.save()
                 //    console.log(customerCartValues)
                // console.log(customerCartValues);
-                   res.json('saved')
+                   res.json('Item removed Succesfully')
 
                     
             }
 
         })
     } catch (err) {
-        res.json(err)
+        res.json(' Internal Server Error ', err )
     }
 })
 
