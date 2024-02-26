@@ -6,7 +6,7 @@ import { removeUser } from "../Utils/userSlice";
 import { LOGO } from "../Utils/mockData";
 
 const Header = ({ ifInCart, ifInLogin }) => {
-	const cart = useSelector((store) => store.cart.cartItems);
+	const cart = useSelector((store) => store?.cart?.cartItems);
 	const user = useSelector((store) => store.user.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -97,7 +97,7 @@ const Header = ({ ifInCart, ifInLogin }) => {
 										className="w-6 rounded-full inline-block"
 										src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWEQD6LABnC5kTVztoatyqwmNgoXUvanemfA&usqp=CAU"
 									></img>{" "}
-									({cart.length} items)
+									({cart ? cart.length : 0} items)
 								</button>
 							</Link>
 						)}

@@ -46,7 +46,7 @@ const CartItems = (props) => {
 					</button>
 					<div className="flex bg-slate-400 p-2">
 						<button
-							onClick={() => count > 1 && setCountFunc(false)}
+							onClick={() => setCountFunc(false)}
 							className="hover:bg-red-400 px-2 hover:text-white  rounded-md mr-2"
 						>
 							-
