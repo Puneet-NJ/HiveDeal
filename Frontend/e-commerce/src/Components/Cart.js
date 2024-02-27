@@ -3,20 +3,18 @@ import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItems from "./CartItems";
-import { updateCartItems } from "../Utils/cartSlice";
+import { addCartItems, updateCartItems } from "../Utils/cartSlice";
 
 const Cart = () => {
 	let cartItems = useSelector((store) => store.cart.cartItems);
 	const token = useSelector((store) => store.user.token);
 
+	const [dummy, setDummy] = useState(null);
 	const [items, setItems] = useState([]);
-	const [count, setCount] = useState(Array(cartItems.length).fill(1));
+	const [count, setCount] = useState(Array(cartItems?.length).fill(1));
 	const dispatch = useDispatch();
 	const user = useSelector((store) => store.user.user);
 	const navigate = useNavigate();
-
-	let price = 0;
-	cartItems.map((item) => (price += item.price * item.totalItems));
 
 	useEffect(() => {
 		const func = async () => {
@@ -27,58 +25,84 @@ const Cart = () => {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			// console.log(data);
-			// console.log(data)
+
 			const json = await data.json();
-			console.log(json?.cartItems?.products);
+
+			console.log(json?.cartItems?.product);
 			console.log(cartItems);
 
-			setItems(json?.cartItems?.products);
+			dispatch(updateCartItems(json?.cartItems?.product));
+			setItems(json?.cartItems?.product);
+
+			console.log(items);
+			console.log(cartItems);
 		};
 
 		func();
-	}, []);
+	}, [dummy]);
 
+	let price = 0;
+	cartItems?.map((item) => (price += item?.product?.price * item?.totalItems));
+
+	// PREVIOUS CODE
+	// {const newCount = [...count];
+	// 	newCount[index] = inc ? count[index] + 1 : count[index] - 1;
+	// 	setCount(newCount);
+
+	// 	let newCartItems = cartItems.map((item, i) => {
+	// 		if (i === index) {
+	// 			return { ...item, totalItems: newCount[index] };
+	// 		}
+	// 		return { ...item };
+	// 	});
+	// 	dispatch(updateCartItems(newCartItems));
+
+	// 	console.log(newCartItems);
+	// 	// Send to backend
+	// 	const newItem = {
+	// 		_id: newCartItems[index]._id,
+	// 	};
+
+	// 	console.log(newItem);
+
+	// 	await fetch("http://localhost:3000/customer/additem", {
+	// 		method: "POST",
+	// 		body: JSON.stringify(newItem),
+	// 		headers: {
+	// 			Authorization: `Bearer ${token}`,
+	// 		},
+	// 	});}
 	const handleCount = async (inc, index) => {
-		const newCount = [...count];
-		newCount[index] = inc ? count[index] + 1 : count[index] - 1;
-		setCount(newCount);
-
-		let newCartItems = items.map((item, i) => {
-			if (i === index) {
-				return { ...item, totalItems: newCount[index] };
-			}
-			return { ...item };
-		});
-		setItems(newCartItems);
-		dispatch(updateCartItems(items));
-
-		// Send to backend
-		const newItem = {
-			_id: newCartItems[index]._id,
-			quantity: newCartItems[index].totalItems,
-		};
-
-		console.log(newItem);
-
-		await fetch("http://localhost:3000/customer/quantity", {
+		console.log(inc);
+		const msg = await fetch(`http://localhost:3000/customer/additem`, {
 			method: "POST",
-			body: JSON.stringify(newItem),
+			body: JSON.stringify({
+				_id: cartItems?.[index]?.product?._id,
+				isInc: inc,
+			}),
 			headers: {
+				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
 		});
+
+		setDummy(items);
 	};
 
-	const handleRemoveItem = (index) => {
-		const newCart = [...cartItems];
-		newCart.splice(index, 1);
-
-		setItems(newCart);
-		console.log(items);
-		dispatch(updateCartItems(items));
-
-		//Send to Backend
+	const handleRemoveItem = async (index) => {
+		const msg = await fetch(`http://localhost:3000/customer/removeitem`, {
+			method: "POST",
+			body: JSON.stringify({
+				_id: cartItems?.[index]?.product?._id,
+			}),
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		// console.log(msg);
+		setDummy(items);
+		// console.log(cartItems);
 	};
 
 	const handlePlaceOrder = () => {
@@ -102,7 +126,7 @@ const Cart = () => {
 							CART
 						</h1>
 
-						{items?.length === 0 ? (
+						{!items || items?.length === 0 ? (
 							<div className="text-3xl flex justify-center items-center pt-16">
 								Your cart is empty!!😕
 							</div>
@@ -110,7 +134,7 @@ const Cart = () => {
 							items?.map((item, index) => (
 								<CartItems
 									key={item?._id}
-									item={item}
+									item={item?.product}
 									totalItems={item?.totalItems}
 									count={count[index]}
 									setCountFunc={(inc) => {
@@ -124,7 +148,7 @@ const Cart = () => {
 						)}
 
 						<div className="mt-10 flex justify-center">
-							{cartItems.length > 0 && (
+							{items && items?.length !== 0 && (
 								<button
 									onClick={handlePlaceOrder}
 									className="px-10 py-3 bg-green-500 text-white hover:bg-green-600 hover:scale-95 duration-150"
@@ -140,7 +164,7 @@ const Cart = () => {
 						</h1>
 						<div className="px-7 mt-3 flex justify-between">
 							<div className="">Price ({items?.length} items)</div>
-							<div className="">₹{price}</div>
+							<div className="">₹{price ? price : 0}</div>
 						</div>
 
 						<div className="px-7 mt-5 flex justify-between">
@@ -155,7 +179,7 @@ const Cart = () => {
 
 						<div className="px-7 mt-8 py-6 text-md font-semibold border-y border-gray-400 flex justify-between">
 							<div className="">Total Amount</div>
-							<div className="">₹{price}</div>
+							<div className="">₹{price ? price : 0}</div>
 						</div>
 					</div>
 				</div>

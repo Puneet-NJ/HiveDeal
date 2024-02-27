@@ -33,7 +33,7 @@ const Product = () => {
 	// console.log(item);
 
 	const handleAddToCart = async () => {
-		const present = cart.some(
+		const present = cart?.some(
 			(itemInCart) =>
 				JSON.stringify({ ...item, totalItems: 1 }) ===
 				JSON.stringify(itemInCart)
@@ -42,9 +42,7 @@ const Product = () => {
 			navigate("/cart");
 			return;
 		}
-		if (!present) dispatch(addCartItems({ ...item, totalItems: 1 }));
-
-		navigate("/cart");
+		// if (!present) dispatch(addCartItems({ ...item, totalItems: 1 }));
 
 		//Send to Backend
 
@@ -59,6 +57,8 @@ const Product = () => {
 			},
 		});
 		console.log(msg);
+
+		navigate("/cart");
 	};
 
 	return (
