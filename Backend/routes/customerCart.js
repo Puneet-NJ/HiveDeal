@@ -15,7 +15,7 @@ router.get("/cart", Auth, async (req, res) => {
 			if (err) {
 				return res.status(403).json("error, forbidden");
 			}
-			console.log("data", data.customerEmail);
+			
 			const custCartValue = await customer.findOne({
 				customerEmail: data.customerEmail,
 			});
@@ -29,7 +29,7 @@ router.get("/cart", Auth, async (req, res) => {
 					model: "Product",
 				});
 
-			console.log(cartItems);
+
 			res.json({
 				cartItems,
 			});
@@ -142,7 +142,7 @@ router.post("/removeitem", Auth, async (req, res) => {
 				const customerCartValues = await customerCart.findOne({
 					customer: cust._id,
 				});
-				console.log(customerCartValues);
+				
 				const procuctToRemove = customerCartValues.product.filter((item) => {
 					return item.product.toString() !== _id;
 				});

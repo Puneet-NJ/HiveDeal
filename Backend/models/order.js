@@ -1,22 +1,80 @@
-// import mongoose from 'mongoose'
-// import customer from './customer'
+import mongoose from 'mongoose'
 
-// const orderSchema = mongoose.Schema({
+
+
+
+
+
+const orderSchema = mongoose.Schema(
+    {
+        cartId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'customerCart'
+        },
+        customer: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'customer'
+        },
+    contact: String,
+    house: String,
+    street: String,
+    landmark: String,
+    city: String,
+
+
+    orderValues:
+     [
+        {
+            product:
+            
+                {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Product'
+                },
+                
+            
+            totalItems: Number,
+            date: 
+            {
+                type: Date,
+                default: Date.now()
+            }
+        }
+        
+    ]
+})
+
+
+
+
+
+// {
 //     customer:
 //     {
-//         type: mongoose.Schema.Types.ObjectId , 
-//         ref: 'customer',
-//         required: true
+//       name: 'sadasd',
+//       email: 'sadasd'
 //     },
-//     product:
+//     prod:
 //     [
-//         {
-//             type: mongoose.Schema.Types.ObjectId,
-//             ref: 'Product',
-//             required: true
-//         },
-//     ],
-//     quantity: Number
-// })
-// const order = mongoose.model("order" , orderSchema)
-// export default order 
+//       {
+//         products: 
+//         [
+//           {id: 'addas' , name: 'dadaas'},
+//           {id: 'sadasda', name: 'dadasadasd'}
+//         ],
+//         date: 'asdasda'
+//       },
+//       {
+//          products: 
+//         [
+//           {id: 'addas' , name: 'dadaas'},
+//           {id: 'sadasda', name: 'dadasadasd'}
+//         ],
+//         date: 'asdasda'
+//       }
+//     ]
+//   }
+
+
+const order = mongoose.model('order' ,orderSchema)
+export default order

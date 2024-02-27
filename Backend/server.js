@@ -25,16 +25,17 @@ import customerLogin from "./routes/customerLogin.js";
 import productList from "./routes/getproducts.js";
 import adminRoutes from "./routes/admin.js";
 import customerCart from "./routes/customerCart.js";
+import order from './routes/order.js'
 // import { isAuth } from "./controllers/auth.js";
 
-db(); //database config
+db(); 
 initializingPassport(passport);
 app.use(
 	Session({
 		secret: "your-secret-key",
 		resave: false,
 		saveUninitialized: true,
-		cookie: { secure: false }, // Set secure to true if using HTTPS
+		cookie: { secure: false }, 
 	})
 );
 app.use(passport.initialize());
@@ -42,7 +43,7 @@ app.use(passport.session());
 app.use("/uploads", express.static("uploads"));
 
 //routes
-app.use("/customer", customerRegister, customerCart);
+app.use("/customer", customerRegister, customerCart, order);
 // app.use("/login", customerLogin);
 // app.use("/addproduct", productRoutes);
 app.use("/getproducts", productList);
