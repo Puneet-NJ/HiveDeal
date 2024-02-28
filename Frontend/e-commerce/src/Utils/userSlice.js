@@ -6,6 +6,7 @@ const userSlice = createSlice({
 		user: null,
 		address: null,
 		token: null,
+		cartID: null,
 	},
 	reducers: {
 		addUser: (state, action) => {
@@ -25,9 +26,19 @@ const userSlice = createSlice({
 		addToken: (state, action) => {
 			state.token = action.payload;
 		},
+
+		addCartID: (state, action) => {
+			state.cartID = action.payload;
+		},
 	},
 });
 
-export const { addUser, removeUser, addAddress, removeAddress, addToken } =
-	userSlice.actions;
+export const {
+	addUser,
+	removeUser,
+	addAddress,
+	removeAddress,
+	addToken,
+	addCartID,
+} = userSlice.actions;
 export default userSlice.reducer;
