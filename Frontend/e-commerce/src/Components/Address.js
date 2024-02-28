@@ -1,27 +1,45 @@
 import React, { useRef } from "react"; // Import React
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "../Utils/userSlice";
 
 const Address = () => {
 	const cNo = useRef(null);
 	const house = useRef(null);
-	const street = useRef(null); 
+	const street = useRef(null);
 	const landmark = useRef(null);
 	const city = useRef(null);
 
+	const token = useSelector((store) => store.user.token);
+	const cartID = useSelector((store) => store.user.cartID);
+
 	const dispatch = useDispatch();
 
-	const handleAddAddress = () => {
+	const handleAddAddress = async () => {
 		const address = {
+			cartId: cartID,
 			contact: cNo.current.value,
 			house: house.current.value,
 			street: street.current.value,
 			landmark: landmark.current.value,
 			city: city.current.value,
 		};
-
+		// const toSend = JSON.stringify({ cartId: cartID, ...address });
+		// console.log(toSend);
+		// console.log(JSON.stringify(address))
 		dispatch(addAddress(address));
+
+		const data = await fetch("http://localhost:3000/customer/order", {
+			method: "POST",
+			body: JSON.stringify( address ),
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		console.log(data);
 	};
+
 
 	return (
 		<div className="pt-48">

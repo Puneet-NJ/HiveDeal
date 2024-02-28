@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { removeUser } from "../Utils/userSlice";
@@ -51,13 +51,17 @@ const Header = ({ ifInCart, ifInLogin }) => {
 
 	const handleLogin = () => {
 		if (user) {
+			// Sign Out
 			dispatch(removeUser());
 		} else {
+			// When no user & he wants to login
 			navigate("/login");
 		}
 	};
 
-	// if (!user) navigate("/login");
+	useEffect(() => {
+		if (!user) navigate("/login");
+	}, [user]);
 
 	return (
 		<div className="fixed z-10 w-full bg-opacity-95 bg-slate-200 h-28 flex justify-between items-center px-16">

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItems from "./CartItems";
 import { addCartItems, updateCartItems } from "../Utils/cartSlice";
+import { addCartID } from "../Utils/userSlice";
 
 const Cart = () => {
 	let cartItems = useSelector((store) => store.cart.cartItems);
@@ -28,7 +29,8 @@ const Cart = () => {
 
 			const json = await data.json();
 
-			console.log(json?.cartItems?.product);
+			dispatch(addCartID(json?.cartItems?._id));
+			console.log(json?.cartItems?._id);
 			console.log(cartItems);
 
 			dispatch(updateCartItems(json?.cartItems?.product));
@@ -69,12 +71,12 @@ const Cart = () => {
 	// 		method: "POST",
 	// 		body: JSON.stringify(newItem),
 	// 		headers: {
-	// 			Authorization: `Bearer ${token}`,
+	// 			Authorization: Bearer ${token},
 	// 		},
 	// 	});}
 	const handleCount = async (inc, index) => {
 		console.log(inc);
-		const msg = await fetch(`http://localhost:3000/customer/additem`, {
+		const msg = await fetch('http://localhost:3000/customer/additem', {
 			method: "POST",
 			body: JSON.stringify({
 				_id: cartItems?.[index]?.product?._id,
@@ -90,7 +92,7 @@ const Cart = () => {
 	};
 
 	const handleRemoveItem = async (index) => {
-		const msg = await fetch(`http://localhost:3000/customer/removeitem`, {
+		const msg = await fetch('http://localhost:3000/customer/removeitem', {
 			method: "POST",
 			body: JSON.stringify({
 				_id: cartItems?.[index]?.product?._id,
