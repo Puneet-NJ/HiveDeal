@@ -5,12 +5,14 @@ import express from "express";
 import Session from "express-session";
 import passport from "passport";
 import cors from "cors";
+import cookieParser from 'cookie-parser'
 
 const app = express();
 
 app.use(cors());
 
 app.use(express.json());
+app.use(cookieParser())
 app.use(
 	express.urlencoded({
 		extended: true,
@@ -26,6 +28,7 @@ import productList from "./routes/getproducts.js";
 import adminRoutes from "./routes/admin.js";
 import customerCart from "./routes/customerCart.js";
 import order from './routes/order.js'
+import customerProfile from './routes/customerProfile.js'
 // import { isAuth } from "./controllers/auth.js";
 
 db(); 
@@ -43,7 +46,7 @@ app.use(passport.session());
 app.use("/uploads", express.static("uploads"));
 
 //routes
-app.use("/customer", customerRegister, customerCart, order);
+app.use("/customer", customerRegister, customerCart, order , customerProfile);
 // app.use("/login", customerLogin);
 // app.use("/addproduct", productRoutes);
 app.use("/getproducts", productList);
