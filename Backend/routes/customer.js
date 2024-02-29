@@ -57,9 +57,9 @@ router.post("/login", async (req, res) => {
 			const token = jwt.sign({ customerEmail }, process.env.user_token, {
 				expiresIn: "1h",
 			});
-
-			req.session.userID = customerData._id;
-			console.log(req.userID);
+			res.cookie('token', token, { httpOnly: true })
+			// req.session.userID = customerData._id;
+			// console.log(req.userID);
 			const valid = {
 				auth: true,
 				token: token,
