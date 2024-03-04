@@ -1,8 +1,8 @@
 import express from 'express' 
 import jwt from 'jsonwebtoken' 
 import multer from 'multer' 
-import Product from '../models/product.js' 
-import { Auth } from '../controllers/auth.js' 
+import Product from '../../models/product.js' 
+import { Auth } from '../../controllers/auth.js' 
 
 const storage = multer.memoryStorage() 
 const upload = multer({ storage: storage }) 

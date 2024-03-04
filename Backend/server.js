@@ -21,14 +21,14 @@ app.use(
 
 import { db } from "./config/db.js";
 import { initializingPassport } from "./config/passportConfig.js";
-import customerRegister from "./routes/customer.js";
-import customerLogin from "./routes/customerLogin.js";
+import customerRegister from "./routes/customer/customer.js";
+import customerLogin from "./routes/customer/customerLogin.js";
 // import productRoutes from "./routes/product.js";
 import productList from "./routes/getproducts.js";
-import adminRoutes from "./routes/admin.js";
-import customerCart from "./routes/customerCart.js";
-import order from './routes/order.js'
-import customerProfile from './routes/customerProfile.js'
+import adminRoutes from "./routes/admin/admin.js";
+import customerCart from "./routes/customer/customerCart.js";
+import order from './routes/customer/order.js'
+import customerProfile from './routes/customer/customerProfile.js'
 // import { isAuth } from "./controllers/auth.js";
 
 db(); 

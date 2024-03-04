@@ -1,8 +1,8 @@
 import express from 'express'
-import order from "../models/order.js" 
-import { Auth } from '../controllers/auth.js' 
+import order from "../../models/order.js" 
+import { Auth } from '../../controllers/auth.js' 
 import jwt from 'jsonwebtoken'
-import customer from '../models/customer.js'
+import customer from '../../models/customer.js'
 
 const router = express.Router()
 
