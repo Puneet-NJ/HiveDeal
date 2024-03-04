@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { removeAddress } from "../Utils/userSlice";
 
-const Payment = () => {
+const RemoveAddress = () => {
 	const dispatch = useDispatch();
 
 	const handleRemoveAddress = () => {
@@ -10,12 +10,15 @@ const Payment = () => {
 	};
 
 	return (
-		<div className="pt-40 mx-auto w-1/2">
-			<button onClick={handleRemoveAddress} className="p-3 bg-slate-300 ">
+		<div className="pt-60 mx-auto w-1/2 flex justify-center">
+			<button
+				onClick={handleRemoveAddress}
+				className="p-3 bg-slate-300 shadow-lg hover:scale-95 hover:duration-150 hover:bg-slate-400 hover:text-white"
+			>
 				Remove address
 			</button>
 		</div>
 	);
 };
 
-export default Payment;
+export default RemoveAddress;

@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { removeUser } from "../Utils/userSlice";
+import { removeAddress, removeUser } from "../Utils/userSlice";
 import { LOGO } from "../Utils/mockData";
 
 const Header = ({ ifInCart, ifInLogin }) => {
@@ -53,6 +53,7 @@ const Header = ({ ifInCart, ifInLogin }) => {
 		if (user) {
 			// Sign Out
 			dispatch(removeUser());
+			dispatch(removeAddress());
 		} else {
 			// When no user & he wants to login
 			navigate("/login");

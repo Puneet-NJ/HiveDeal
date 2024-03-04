@@ -1,6 +1,7 @@
 import React, { useRef } from "react"; // Import React
 import { useDispatch, useSelector } from "react-redux";
 import { addAddress } from "../Utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Address = () => {
 	const cNo = useRef(null);
@@ -8,6 +9,8 @@ const Address = () => {
 	const street = useRef(null);
 	const landmark = useRef(null);
 	const city = useRef(null);
+
+	const navigate = useNavigate();
 
 	const token = useSelector((store) => store.user.token);
 	const cartID = useSelector((store) => store.user.cartID);
@@ -23,14 +26,11 @@ const Address = () => {
 			landmark: landmark.current.value,
 			city: city.current.value,
 		};
-		// const toSend = JSON.stringify({ cartId: cartID, ...address });
-		// console.log(toSend);
-		// console.log(JSON.stringify(address))
 		dispatch(addAddress(address));
 
 		const data = await fetch("http://localhost:3000/customer/order", {
 			method: "POST",
-			body: JSON.stringify( address ),
+			body: JSON.stringify(address),
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
@@ -38,8 +38,9 @@ const Address = () => {
 		});
 
 		console.log(data);
-	};
 
+		if (data.ok) navigate("/order-success");
+	};
 
 	return (
 		<div className="pt-48">
