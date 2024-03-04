@@ -1,7 +1,7 @@
 import express from 'express'
-import order from "../models/order.js" 
-import { Auth } from '../controllers/auth.js' 
-import customerCart from '../models/cart.js' 
+import order from "../../models/order.js" 
+import { Auth } from '../../controllers/auth.js' 
+import customerCart from '../../models/cart.js' 
 
 const router = express.Router()
 

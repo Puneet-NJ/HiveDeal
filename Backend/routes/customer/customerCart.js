@@ -1,9 +1,9 @@
-import { Auth } from "../controllers/auth.js";
-import customerCart from "../models/cart.js";
-import customer from "../models/customer.js";
+import { Auth } from "../../controllers/auth.js";
+import customerCart from "../../models/cart.js";
+import customer from "../../models/customer.js";
 import express from "express";
 import jwt from "jsonwebtoken";
-import product from "../models/product.js";
+import product from "../../models/product.js";
 
 // import product from '../models/product'
 
