@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
 	try {
 		const customerData = await customer.findOne({ customerEmail });
 		if (!customerData) {
-			return res.json({ message: "Customer not found" });
+			return res.json({ auth: false, message: "Customer not found" });
 		}
 		const validCustomer = await bcrypt.compare(
 			customerPassword,
@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
 			const token = jwt.sign({ customerEmail }, process.env.user_token, {
 				expiresIn: "1h",
 			});
-			res.cookie('token', token, { httpOnly: true })
+			res.cookie("token", token, { httpOnly: true });
 			// req.session.userID = customerData._id;
 			// console.log(req.userID);
 			const valid = {

@@ -17,6 +17,12 @@ const RemoveAddress = () => {
 			>
 				Remove address
 			</button>
+			<button
+				// onClick={handlePlaceOrder}
+				className="ml-10 p-3 bg-slate-300 shadow-lg hover:scale-95 hover:duration-150 hover:bg-slate-400 hover:text-white"
+			>
+				Place Order with current address
+			</button>
 		</div>
 	);
 };

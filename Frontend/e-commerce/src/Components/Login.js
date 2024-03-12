@@ -39,9 +39,9 @@ const Login = () => {
 					});
 
 					const auth = await data.json();
-					// console.log(auth);
+					console.log(auth);
+					if (auth?.auth) navigate("/");
 					dispatch(addToken(auth.token));
-					if (auth) navigate("/");
 				} else {
 					// Sign Up form
 
@@ -59,9 +59,9 @@ const Login = () => {
 					});
 
 					const auth = await data.json();
-					// console.log(auth);
+					console.log(auth);
+					if (auth?.auth) navigate("/");
 					dispatch(addToken(auth.token));
-					if (auth) navigate("/");
 				}
 
 				accessToBrowse();
