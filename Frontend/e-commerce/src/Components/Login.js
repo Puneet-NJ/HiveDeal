@@ -38,10 +38,24 @@ const Login = () => {
 						},
 					});
 
-					const auth = await data.json();
-					console.log(auth);
-					if (auth?.auth) navigate("/");
-					dispatch(addToken(auth.token));
+					const admin = await fetch("http://localhost:3000/admin/login", {
+						method: "POST",
+						body: JSON.stringify({
+							adminName: values.customerEmail,
+							adminPass: values.customerPassword,
+						}),
+						headers: {
+							"Content-Type": "application/json",
+						},
+					});
+
+					const user = await data.json();
+					const admin2 = await admin.json();
+					// console.log(admin2);
+
+					if (admin2?.admin) navigate("/admin");
+					if (user?.auth) navigate("/");
+					dispatch(addToken(user.token));
 				} else {
 					// Sign Up form
 
