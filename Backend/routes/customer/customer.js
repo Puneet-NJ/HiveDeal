@@ -2,6 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import customer from "../../models/customer.js";
+import isAdmin from "../../services/isAdmin.js";
 
 const router = express.Router();
 
@@ -47,7 +48,7 @@ router.post("/login", async (req, res) => {
 	try {
 		const customerData = await customer.findOne({ customerEmail });
 		if (!customerData) {
-			return res.json({ auth: false, message: "Customer not found" });
+			return res.json({ admin: false ,auth: false, message: "Customer not found" });
 		}
 		const validCustomer = await bcrypt.compare(
 			customerPassword,
@@ -61,6 +62,7 @@ router.post("/login", async (req, res) => {
 			// req.session.userID = customerData._id;
 			// console.log(req.userID);
 			const valid = {
+				admin: false,
 				auth: true,
 				token: token,
 			};
@@ -68,8 +70,8 @@ router.post("/login", async (req, res) => {
 			res.json(valid);
 		} else {
 			res.json({ message: "Invalid credentials" });
-		}
-	} catch (error) {
+		}}
+		 catch (error) {
 		console.log(error);
 	}
 });

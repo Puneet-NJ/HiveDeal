@@ -13,13 +13,19 @@ router.post('/login', async (req, res) => {
     const { adminName, adminPass } = req.body 
 
     try {
-        if (adminName == "sada" && adminPass == "sada") {
+        if (adminName == process.env.adminName && adminPass == process.env.adminPass) {
             jwt.sign({ adminName }, process.env.token, { expiresIn: '1h' }, (err, token) => {
                 if (err) { console.log(err) }
-                res.send(token) 
+               return res.json({
+				admin: true,
+				auth: true,
+				token: token
+			   })
             }) 
         } else {
-            res.json({
+           return res.json({
+				admin: false,
+				auth: false,
                 error: 'Wrong Password'
             }) 
         }
