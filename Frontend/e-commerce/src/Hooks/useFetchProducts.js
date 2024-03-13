@@ -25,6 +25,8 @@ const useFetchProducts = () => {
 		dispatch(addBags(bags));
 		dispatch(addSnacks(snacks));
 		dispatch(addLaptops(laptops));
+
+		console.log("store");
 	};
 	useEffect(() => {
 		fetchData();

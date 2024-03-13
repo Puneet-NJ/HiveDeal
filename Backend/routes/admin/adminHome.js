@@ -44,5 +44,19 @@ router.get("/home", Auth, (req, res) => {
 		});
 	} catch (error) {}
 });
-
+router.post("/removeproduct", Auth, (req, res) => {
+	try {
+		jwt.verify(req.token, process.env.token, async (err, data) => {
+			const { productId } = req.body;
+			try {
+				await product.deleteOne({ _id: productId });
+				res.json("deleted");
+			} catch (error) {
+				console.log(error);
+			}
+		});
+	} catch (err) {
+		console.err(err);
+	}
+});
 export default router;
