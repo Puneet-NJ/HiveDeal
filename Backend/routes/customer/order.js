@@ -2,6 +2,7 @@ import express from "express";
 import order from "../../models/order.js";
 import { Auth } from "../../controllers/auth.js";
 import customerCart from "../../models/cart.js";
+import product from "../../models/product.js";
 
 const router = express.Router();
 
@@ -37,10 +38,20 @@ router.post("/order", Auth, async (req, res) => {
 					date: new Date(),
 				})),
 			});
+			// cartDetails.product.map(async (product)=> {
+			// 	await product.findOneAndUpdate({product.product},{})
+			// })
+			console.log('cartProducts' , cartDetails)
+			for(product of cartDetails.product){
+				const proooo = await product.findByIdAndUpdate({_id: product.product}, {$inc:{totalItems: product.totalItems}})
+				console.log(proooo)
+			}
+			
+			
 
 			await cartDetails.product.splice(0, cartDetails.product.length);
 			await cartDetails.save();
-
+			
 			// console.log(order)
 			res.json(order);
 		} else {
@@ -64,12 +75,15 @@ router.post("/order", Auth, async (req, res) => {
 				);
 				console.log("Update address");
 			}
-			for (const product of cartDetails.product) {
+			for (const prods of cartDetails.product) {
 				orderExists.orderValues.push({
-					product: product.product,
-					totalItems: product.totalItems,
+					product: prods.product,
+					totalItems: prods.totalItems,
 					date: new Date(),
-				});
+					
+				}
+				)
+				await product.findOneAndUpdate(prods.product, { $inc: { totalItems: prods.totalItems } })
 			}
 			await orderExists.save();
 

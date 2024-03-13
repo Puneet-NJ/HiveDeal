@@ -73,7 +73,7 @@ router.post("/additem", Auth, async (req, res) => {
 					await cart.save();
 				}
 
-				await product.findByIdAndUpdate(_id, { $inc: { totalItems: 1 } });
+				// await product.findByIdAndUpdate(_id, { $inc: { totalItems: 1 } });
 
 				return res.send("Item added to cart");
 			});
