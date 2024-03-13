@@ -1,25 +1,19 @@
 
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import { adminAuth } from '../../controllers/auth.js'
+import { Auth } from '../../controllers/auth.js'
+import product from '../../models/product.js'
 
 const router = express.Router()
-router.get('/home' , adminAuth , (req,res)=>{
-    console.log(req.token)
-    jwt.verify(req.token, process.env.token, (err, authorizedData) => {
-        if(err){
-            //If error send Forbidden (403)
-            console.log('ERROR: Could not connect to the protected route', err);
-            res.sendStatus(403);
-        } else {
-            //If token is successfully verified, we can send the autorized data 
-            res.json({
-                message: 'Successful log in',
-                authorizedData
-            });
-            console.log('SUCCESS: Connected to protected route');
-        }
-    })
+router.get('/home' , Auth , (req,res)=>{
+    try {
+        jwt.verify(req.token , process.env.token ,async (err ,data) =>{
+            const maxOrdered = await product.find().sort({totalItems: +1}).limit(1)
+            res.json(maxOrdered)
+        })
+    } catch (error) {
+        
+    }
 })
 
 export default router
