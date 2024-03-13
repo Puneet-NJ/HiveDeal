@@ -35,21 +35,21 @@ router.post('/login', async (req, res) => {
     }
 }) 
 
-router.get('/home', Auth, (req, res) => {
-    console.log(req.token) 
-    jwt.verify(req.token, process.env.token, (err, authorizedData) => {
-        if (err) {
-            console.log('ERROR: Could not connect to the protected route', err) 
-            res.sendStatus(403) 
-        } else {
-            res.json({
-                message: 'Successful log in',
-                authorizedData
-            }) 
-            console.log('SUCCESS: Connected to protected route') 
-        }
-    }) 
-}) 
+// router.get('/home', Auth, (req, res) => {
+//     console.log(req.token) 
+//     jwt.verify(req.token, process.env.token, (err, authorizedData) => {
+//         if (err) {
+//             console.log('ERROR: Could not connect to the protected route', err) 
+//             res.sendStatus(403) 
+//         } else {
+//             res.json({
+//                 message: 'Successful log in',
+//                 authorizedData
+//             }) 
+//             console.log('SUCCESS: Connected to protected route') 
+//         }
+//     }) 
+// }) 
 
 router.post('/addproduct', Auth, upload.array('images'), async (req, res) => {
     try {

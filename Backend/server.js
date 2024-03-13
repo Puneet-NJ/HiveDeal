@@ -29,6 +29,7 @@ import adminRoutes from "./routes/admin/admin.js";
 import customerCart from "./routes/customer/customerCart.js";
 import order from './routes/customer/order.js'
 import customerProfile from './routes/customer/customerProfile.js'
+import adminHome from './routes/admin/adminHome.js'
 // import { isAuth } from "./controllers/auth.js";
 
 db(); 
@@ -50,7 +51,7 @@ app.use("/customer", customerRegister, customerCart, order , customerProfile);
 // app.use("/login", customerLogin);
 // app.use("/addproduct", productRoutes);
 app.use("/getproducts", productList);
-app.use("/admin", adminRoutes);
+app.use("/admin", adminRoutes, adminHome);
 // app.use('/adminHome', adminHome)
 
 app.get("/", (req, res) => {
