@@ -47,7 +47,11 @@ router.post("/login", async (req, res) => {
 	try {
 		const customerData = await customer.findOne({ customerEmail });
 		if (!customerData) {
-			return res.json({ admin: false ,auth: false, message: "Customer not found" });
+			return res.json({
+				admin: false,
+				auth: false,
+				message: "Customer not found",
+			});
 		}
 		const validCustomer = await bcrypt.compare(
 			customerPassword,
@@ -69,8 +73,8 @@ router.post("/login", async (req, res) => {
 			res.json(valid);
 		} else {
 			res.json({ message: "Invalid credentials" });
-		}}
-		 catch (error) {
+		}
+	} catch (error) {
 		console.log(error);
 	}
 });

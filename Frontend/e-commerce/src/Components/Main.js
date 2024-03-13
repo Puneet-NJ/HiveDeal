@@ -10,6 +10,7 @@ import NoProduct from "./NoProduct";
 import Profile from "./Profile";
 import PlaceOrder from "./PlaceOrder";
 import OrderSucess from "./OrderSucess";
+import Admin from "./Admin";
 
 const Main = () => {
 	return (
@@ -28,6 +29,7 @@ const Main = () => {
 			<Route path="/profile" element={<Profile />}></Route>
 			<Route path="/place-order" element={<PlaceOrder />}></Route>
 			<Route path="/order-success" element={<OrderSucess />}></Route>
+			<Route path="/admin" element={<Admin />}></Route>
 
 			<Route path="/gibberish" element={<CategoryPageError />}></Route>
 		</Routes>
