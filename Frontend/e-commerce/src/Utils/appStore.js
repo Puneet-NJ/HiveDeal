@@ -3,6 +3,7 @@ import itemsSlice from "./itemsSlice";
 import cartSlice from "./cartSlice";
 import userSlice from "./userSlice";
 import profileSlice from "./profileSlice";
+import adminSlice from "./adminSlice";
 
 const appStore = configureStore({
 	reducer: {
@@ -10,6 +11,7 @@ const appStore = configureStore({
 		cart: cartSlice,
 		user: userSlice,
 		profile: profileSlice,
+		admin: adminSlice,
 	},
 });
 

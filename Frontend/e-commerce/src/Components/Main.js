@@ -10,7 +10,10 @@ import NoProduct from "./NoProduct";
 import Profile from "./Profile";
 import PlaceOrder from "./PlaceOrder";
 import OrderSucess from "./OrderSucess";
-import Admin from "./Admin";
+import Admin from "./Admin/Admin";
+import AddItem from "./Admin/AddItem";
+import RemoveItem from "./Admin/RemoveItem";
+import Customers from "./Admin/Customers";
 
 const Main = () => {
 	return (
@@ -29,7 +32,11 @@ const Main = () => {
 			<Route path="/profile" element={<Profile />}></Route>
 			<Route path="/place-order" element={<PlaceOrder />}></Route>
 			<Route path="/order-success" element={<OrderSucess />}></Route>
+
 			<Route path="/admin" element={<Admin />}></Route>
+			<Route path="/admin/addItem" element={<AddItem />}></Route>
+			<Route path="/admin/removeItem" element={<RemoveItem />}></Route>
+			<Route path="/admin/customers" element={<Customers />}></Route>
 
 			<Route path="/gibberish" element={<CategoryPageError />}></Route>
 		</Routes>
