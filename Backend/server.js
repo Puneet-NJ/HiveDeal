@@ -62,6 +62,6 @@ app.post("/logout", (req, res) => {
 		res.json("logged out");
 	});
 });
-app.listen(3000, async () => {
+app.listen(3000 || process.env.PORT, async () => {
 	console.log("server listening");
 });
