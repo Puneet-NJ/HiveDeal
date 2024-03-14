@@ -1,7 +1,6 @@
-<<<<<<< HEAD
+
 ![]()
 ### HiveDeal: MERN E-commerce 
-=======
 
 <img src="https://github.com/SadanandMiskin/e-commerce/assets/119523972/91bdab78-d822-48de-99b3-ee40c955e7e3" width="700" height="300">
 
@@ -41,7 +40,6 @@ This is a full-stack e-commerce project built using the MERN stack (MongoDB, Exp
 <img src="https://github.com/SadanandMiskin/e-commerce/assets/119523972/28eb14ad-f915-41a8-8883-49b9b51985fb" width="1000" height="300">
 
 
->>>>>>> 3365940a3c6bd5f29b7cb64ccd3ae81a381e1d0e
 ## Setup
 
 1. Clone the repository: `https://github.com/Puneet-NJ/e-commerce`
