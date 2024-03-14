@@ -70,7 +70,6 @@ Create a `.env` file in the root directory and add the following variables:
 ~cd frontend && cd e-commerce~: `npm start`
 
 6. Access the application:
->>>>>>> 3365940a3c6bd5f29b7cb64ccd3ae81a381e1d0e
 Server running on `http://localhost:3000` for `backend`
 Open `http://localhost:3001` in your webbrowser for `frontend`
 
