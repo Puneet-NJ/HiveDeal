@@ -68,7 +68,7 @@ const Header = ({ ifInCart, ifInLogin }) => {
 		<div className="fixed z-10 w-full bg-opacity-95 bg-slate-200 h-28 flex justify-between items-center px-16">
 			<Link to="/">
 				<div className="h-[20%] flex justify-center items-center ">
-					<img className="w-32" src={LOGO} alt="logo" />
+					<img className="w-32 rounded-full" src={LOGO} alt="logo" />
 				</div>
 			</Link>
 

@@ -1,2 +1,2 @@
 export const LOGO =
-	"https://seeklogo.com/images/O/opencart-logo-923F11C362-seeklogo.com.png";
+	"https://github.com/SadanandMiskin/e-commerce/assets/119523972/91bdab78-d822-48de-99b3-ee40c955e7e3 ";

@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 ![]()
 ### HiveDeal: MERN E-commerce 
+=======
+
+<img src="https://github.com/SadanandMiskin/e-commerce/assets/119523972/91bdab78-d822-48de-99b3-ee40c955e7e3" width="700" height="300">
+
+### HiveDeal: MERN E-commerce
+>>>>>>> 3365940a3c6bd5f29b7cb64ccd3ae81a381e1d0e
 
 
 ## Features
@@ -30,6 +37,11 @@
 **HiveDeal** 
 This is a full-stack e-commerce project built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It allows users to browse products, add them to their cart, and make purchases.
 
+
+<img src="https://github.com/SadanandMiskin/e-commerce/assets/119523972/28eb14ad-f915-41a8-8883-49b9b51985fb" width="1000" height="300">
+
+
+>>>>>>> 3365940a3c6bd5f29b7cb64ccd3ae81a381e1d0e
 ## Setup
 
 1. Clone the repository: `https://github.com/Puneet-NJ/e-commerce`
@@ -42,18 +54,25 @@ This is a full-stack e-commerce project built using the MERN stack (MongoDB, Exp
         - `npm i`
 3. Set up environment variables:
 Create a `.env` file in the root directory and add the following variables:
-` PORT=3000
-mongo_URI=YOUR_MONGODB_URL
-token=ADMIN_TOKEN(ANY_VALUE)
-user_token=USER_TOKEN
-adminName=ADMIN_MAIL
-adminPass=ADMIN_PASS `
 
 4. Run the development server:
 ~cd backend~: `npm start`
 ~cd frontend && cd e-commerce~: `npm start`
 
 5. Access the application:
+- ``` PORT=3000 ```
+```mongo_URI=YOUR_MONGODB_URL ```
+```token=ADMIN_TOKEN(ANY_VALUE)```
+```user_token=USER_TOKEN```
+``` adminName=ADMIN_MAIL``` 
+```adminPass=ADMIN_PASS ```
+
+5. Run the development server:
+~cd backend~: `npm start`
+~cd frontend && cd e-commerce~: `npm start`
+
+6. Access the application:
+>>>>>>> 3365940a3c6bd5f29b7cb64ccd3ae81a381e1d0e
 Server running on `http://localhost:3000` for `backend`
 Open `http://localhost:3001` in your webbrowser for `frontend`
 
@@ -62,5 +81,4 @@ Open `http://localhost:3001` in your webbrowser for `frontend`
 The application can be deployed using Vercel. Follow the steps mentioned in the Vercel CLI documentation to deploy the application.
 
 ## Contributing
-
 Contributions are welcome! If you find any issues or want to contribute to the project, feel free to open a pull request or submit an issue.
