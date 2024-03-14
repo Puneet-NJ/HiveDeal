@@ -67,7 +67,7 @@ const RemoveItem = () => {
 		setDummyRender(!dummyRender);
 	};
 
-	console.log(items);
+	console.log(token);
 	if (!items) return;
 	return (
 		<div className="w-4/5 mx-auto">

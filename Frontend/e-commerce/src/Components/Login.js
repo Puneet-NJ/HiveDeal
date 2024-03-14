@@ -51,11 +51,17 @@ const Login = () => {
 
 					const user = await data.json();
 					const admin2 = await admin.json();
-					// console.log(admin2);
+					console.log(admin2);
 
-					if (admin2?.admin) navigate("/admin");
-					if (user?.auth) navigate("/");
-					dispatch(addToken(user.token));
+					if (admin2?.admin) {
+						console.log(admin2.token);
+						dispatch(addToken(admin2.token));
+						navigate("/admin");
+					}
+					if (user?.auth) {
+						dispatch(addToken(user.token));
+						navigate("/");
+					}
 				} else {
 					// Sign Up form
 
